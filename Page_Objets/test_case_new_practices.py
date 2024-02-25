@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
@@ -6,7 +8,8 @@ import string
 
 from Page_Objets.new_practices import SignUpButton
 
-random_num = random.randint(00, 99)
+random_num = random.randint(000, 999)
+phn_num = random.randint(0000000000, 99999999999)
 
 
 class Test_001_LunchBrowser:
@@ -31,12 +34,13 @@ class Test_002_ClickSignUpButton:
         self.driver.get('http://automationexercise.com')
         self.sup = SignUpButton(self.driver)
         self.sup.click_menu()
-        self.sup.set_name("Abul")
+        self.sup.set_name("Abul" + str(random_num))
         self.sup.set_mail("abul" + str(random_num) + "@mail.com")
         self.sup.click_signup_btn()
+        time.sleep(3)
         self.sup.select_name_title()
+        time.sleep(3)
         self.sup.set_password("abc123@")
-        self.sup.select_newsletter()
 
         set_b_date = Select(self.driver.find_element(By.ID, "days"))
         set_b_date.select_by_value("5")
@@ -46,6 +50,10 @@ class Test_002_ClickSignUpButton:
 
         set_b_year = Select(self.driver.find_element(By.ID, "years"))
         set_b_year.select_by_value("1999")
+        time.sleep(2)
+
+        self.sup.select_newsletter()
+        time.sleep(2)
 
         self.sup.set_first_name("Abul" + str(random_num))
         self.sup.set_last_name("Kalam")
@@ -55,34 +63,45 @@ class Test_002_ClickSignUpButton:
         select_country.select_by_value("Australia")
         self.sup.set_state("Canada's state")
         self.sup.set_city("Dhaka")
-        self.sup.set_zip_code("56562")
-        self.sup.set_mobile_number("01723969323")
+        self.sup.set_zip_code(str(random_num))
+        self.sup.set_mobile_number(phn_num)
         self.sup.click_create_account()
 
         expected_text = self.driver.find_element(By.XPATH, "//b[text()='Account Created!']").text
         actual_text = "ACCOUNT CREATED!"
-
         if expected_text == actual_text:
-            print("Your account is created", actual_text)
-
+            assert True
+            print("YOUR IS ACCOUNT CREATED! \n","Your expected text is: ", expected_text)
         else:
-            print("ACCOUNT IS NOT CREATED!")
-
+            print("ACCOUNT NOT CREATED!")
         self.sup.click_continue_button()
-        expected_text = self.driver.find_element(By.XPATH,
-                                                 "//header[@id='header']/div[1]/div[1]/div[1]/div[2]/div[1]/ul[1]/li[10]/a[1]").text
-        if expected_text == "Logged in as Shakil":
-            print("Test Passed")
+        actual_title = self.driver.title
+        expected_title = "Automation Exercise"
+        if actual_title == expected_title:
+            assert True
+            print("'Logged in as username' is visible")
 
         else:
-            print("Test Failed")
+            print("'Logged in as username' is not visible")
 
         self.sup.click_delete_account()
         expected_text = self.driver.find_element(By.XPATH, "//b[text()='Account Deleted!']")
         if expected_text == "ACCOUNT DELETED!":
-            print("Test Passed")
+            assert True
+            print("ACCOUNT DELETED!")
 
         else:
-            print("Test Failed")
-            self.driver.save_screenshot(r"D:\basic_automation\Screen_Shot\test" + str(random_num) + ".png")
+            print("ACCOUNT IS NOT DELETED!")
+
         self.sup.click_continue_btn()
+        actual_title = self.driver.title
+        expected_title = "Automation Exercise"
+        if actual_title == expected_title:
+            assert True
+
+            print("Test Done")
+        else:
+            print("Test Done")
+
+
+

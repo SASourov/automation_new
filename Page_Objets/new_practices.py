@@ -10,7 +10,7 @@ class SignUpButton:
         self.name = (By.NAME, "name")
         self.email = (By.XPATH, "(//input[@name='email'])[2]")
         self.click_sign_up_button = (By.XPATH, "(//button[@class='btn btn-default'])[2]")
-        self.select_title = (By.ID, "id_gender1")
+        self.select_title = (By.XPATH, "//input[@type='radio']")
         self.password = (By.ID, "password")
         self.newsletter = (By.ID, "newsletter")
         self.first_name = (By.ID, "first_name")
