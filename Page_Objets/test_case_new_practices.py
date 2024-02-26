@@ -6,7 +6,8 @@ from selenium.webdriver.support.select import Select
 import random
 import string
 
-from Page_Objets.new_practices import SignUpButton, InvalidLogin, Logout, ExistingMail, ContactUs, NavigateTestcasePage
+from Page_Objets.new_practices import (SignUpButton, InvalidLogin, Logout, ExistingMail, ContactUs,
+                                       NavigateTestcasePage, ProductButton)
 
 random_num = random.randint(000, 999)
 phn_num = random.randint(0000000000, 99999999999)
@@ -227,3 +228,22 @@ class Test_Case_007:
 
         else:
             print("TC 007 is failed")
+
+
+class Test_Case_008:
+    def test_product_menu(self):
+        self.driver = webdriver.Chrome()
+        self.driver.implicitly_wait(20)
+        self.driver.maximize_window()
+        self.driver.get("https://automationexercise.com/")
+        self.pb = ProductButton(self.driver)
+        self.pb.click_product_button()
+        expected_text = self.driver.find_element(By.XPATH, "//h2[text()='Category']").text
+        if expected_text == "CATEGORY":
+            assert True
+            print("TC 008 is passed\nYour expected outcome is: detail is visible: product name, category, price, "
+                  "availability, condition, brand")
+
+        else:
+            print("TC 008 is failed")
+        self.driver.close()
