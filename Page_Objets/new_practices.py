@@ -21,7 +21,7 @@ class SignUpButton:
         self.city = (By.ID, "city")
         self.zip_code = (By.ID, "zipcode")
         self.mobile_number = (By.ID, "mobile_number")
-        self.click_create_ac = (By.XPATH, "//button[@class='btn btn-default']")
+        self.click_create_ac = (By.XPATH, "//div[@class='login-form']//button[1]")
         self.continue_button = (By.XPATH, "//a[@class='btn btn-primary']")
         self.delete_account = (By.XPATH, "//a[@href='/delete_account']")
 
@@ -81,3 +81,51 @@ class SignUpButton:
 
     def click_continue_btn(self):
         self.driver.find_element(*self.continue_button).click()
+
+
+class InvalidLogin:
+    def __init__(self, driver):
+        self.driver = driver
+
+        self.click_login_menu = (By.XPATH, "//a[@href='/login']")
+        self.email_address = (By.XPATH, "//input[@name='email']")
+        self.password = (By.NAME, "password")
+        self.login_button = (By.XPATH, "//button[@class='btn btn-default']")
+
+    def click_menu(self):
+        self.driver.find_element(*self.click_login_menu).click()
+
+    def set_email(self, email):
+        self.driver.find_element(*self.email_address).send_keys(email)
+
+    def set_password(self, password):
+        self.driver.find_element(*self.password).send_keys(password)
+
+    def click_login_button(self):
+        self.driver.find_element(*self.login_button).click()
+
+
+class Logout:
+    def __init__(self, driver):
+        self.driver = driver
+
+        self.click_login_menu = (By.XPATH, "//a[@href='/login']")
+        self.email_address = (By.XPATH, "//input[@name='email']")
+        self.password = (By.NAME, "password")
+        self.login_button = (By.XPATH, "//button[@class='btn btn-default']")
+        self.log_out_button = (By.XPATH, "//a[@href='/logout']")
+
+    def click_menu(self):
+        self.driver.find_element(*self.click_login_menu).click()
+
+    def set_email(self, email):
+        self.driver.find_element(*self.email_address).send_keys(email)
+
+    def set_password(self, password):
+        self.driver.find_element(*self.password).send_keys(password)
+
+    def click_login_button(self):
+        self.driver.find_element(*self.login_button).click()
+
+    def click_logout_button(self):
+        self.driver.find_element(*self.log_out_button).click()
