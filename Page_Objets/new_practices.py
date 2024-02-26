@@ -189,10 +189,24 @@ class ContactUs:
 
 class NavigateTestcasePage:
 
-    def __init__(self,driver):
+    def __init__(self, driver):
         self.driver = driver
 
         self.test_case_menu = (By.XPATH, "//button[@class='btn btn-success']")
 
     def click_test_case_menu(self):
         self.driver.find_element(*self.test_case_menu).click()
+
+
+class ProductButton:
+    def __init__(self, driver):
+        self.driver = driver
+
+        self.product_button = (By.XPATH, "//a[@href='/products']")
+        self.view_product_button = (By.XPATH, "//a[@href='/product_details/1']")
+
+    def click_product_button(self):
+        self.driver.find_element(*self.product_button).click()
+
+    def click_view_product_button(self):
+        self.driver.find_element(*self.view_product_button).click()
