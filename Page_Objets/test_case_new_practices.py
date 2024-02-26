@@ -6,7 +6,7 @@ from selenium.webdriver.support.select import Select
 import random
 import string
 
-from Page_Objets.new_practices import SignUpButton, InvalidLogin, Logout
+from Page_Objets.new_practices import SignUpButton, InvalidLogin, Logout, ExistingMail, ContactUs, NavigateTestcasePage
 
 random_num = random.randint(000, 999)
 phn_num = random.randint(0000000000, 99999999999)
@@ -34,8 +34,8 @@ class Test_002_ClickSignUpButton:
         self.driver.get('http://automationexercise.com')
         self.sup = SignUpButton(self.driver)
         self.sup.click_menu()
-        self.sup.set_name("Abul Kashem")  #+ str(random_num)
-        self.sup.set_mail("abul009@mail.com") #+ str(random_num) + "
+        self.sup.set_name("Abul Kashem")  # + str(random_num)
+        self.sup.set_mail("abul009@mail.com")  # + str(random_num) + "
         self.sup.click_signup_btn()
         time.sleep(3)
         self.sup.select_name_title()
@@ -55,7 +55,7 @@ class Test_002_ClickSignUpButton:
         self.sup.select_newsletter()
         time.sleep(3)
 
-        self.sup.set_first_name("Abul")  #+ str(random_num)
+        self.sup.set_first_name("Abul")  # + str(random_num)
         self.sup.set_last_name("Kalam")
         self.sup.set_address_1("Dhaka, Bangladesh")
         self.sup.set_address_2("Same as address1")
@@ -123,7 +123,7 @@ class Test_Case_003_Invalid_Login:
 
         if error_message == "Your email or password is incorrect!":
             assert True
-            print("TC 003 is passed.\nYour error message is: ", error_message)
+            print("TC 003 is passed.\nYour expected outcome is: ", error_message)
 
         else:
             print("TC 003 is failed")
@@ -152,3 +152,78 @@ class Test_Case_004_Logout:
             print("TC 004 is failed")
 
         self.driver.close()
+
+
+class Test_Case_005:
+    def test_signup_with_existing_mail(self):
+        self.driver = webdriver.Chrome()
+        self.driver.implicitly_wait(20)
+        self.driver.maximize_window()
+        self.driver.get('http://automationexercise.com')
+        self.exm = ExistingMail(self.driver)
+        self.exm.click_menu()
+        self.exm.set_name("Abul Kashem")
+        self.exm.set_mail("shakil12@mailinator.com")
+        self.exm.click_signup_btn()
+        error = self.driver.find_element(By.XPATH, "//p[text()='Email Address already exist!']").text
+
+        if error == "Email Address already exist!":
+            assert True
+            print("TC 005 is passed.\nYour expected outcome is: ", error)
+
+        else:
+            print("TC oo5 is failed")
+
+        self.driver.close()
+
+
+class Test_Case_006:
+    def test_contact_us(self):
+        self.driver = webdriver.Chrome()
+        self.driver.implicitly_wait(20)
+        self.driver.maximize_window()
+        self.driver.get('http://automationexercise.com')
+        self.cs = ContactUs(self.driver)
+        self.cs.click_contact_us_menu()
+        visible_text = self.driver.find_element(By.XPATH, "//div[@class='contact-form']//h2[1]").text
+        if visible_text == "GET IN TOUCH":
+            assert True
+            print("Verified That 'GET IN TOUCH' is visible")
+        else:
+            print("Not Verified that 'GET IN TOUCH' is visible")
+
+        self.cs.set_name("Shakil")
+        self.cs.set_email("shakil@mail.com")
+        self.cs.set_subject("Complain")
+        self.cs.set_message("uguguig ufhureghriueuigruigurffuir ")
+        self.cs.upload_photo(r"D:\File\pro_pic_demo.png")
+        self.cs.click_submit_button()
+        self.cs.driver.switch_to.alert.accept()  # Handlee for JS Alert
+
+        success_message = self.driver.find_element(By.XPATH, "//div[contains(@class,'status alert')]").text
+        if success_message == "Success! Your details have been submitted successfully.":
+            assert True
+            print("TC 006 is passed. \nYour Expected outcome is : ", success_message)
+
+        else:
+            print("TC 006 is failed")
+        time.sleep(2)
+        self.driver.close()
+
+
+class Test_Case_007:
+    def test_case_menu(self):
+        self.driver = webdriver.Chrome()
+        self.driver.implicitly_wait(20)
+        self.driver.maximize_window()
+        self.driver.get("https://automationexercise.com/")
+        self.tc = NavigateTestcasePage(self.driver)
+        self.tc.click_test_case_menu()
+
+        expected_text = self.driver.find_element(By.XPATH, "//b[text()='Test Cases']").text
+        if expected_text == "TEST CASES":
+            assert True
+            print("TC 007 is passed \nYour expected text is: ", expected_text)
+
+        else:
+            print("TC 007 is failed")
