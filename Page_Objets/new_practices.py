@@ -129,3 +129,70 @@ class Logout:
 
     def click_logout_button(self):
         self.driver.find_element(*self.log_out_button).click()
+
+
+class ExistingMail:
+    def __init__(self, driver):
+        self.driver = driver
+
+        self.click_login_menu = (By.XPATH, "//a[@href='/login']")
+        self.name = (By.NAME, "name")
+        self.email = (By.XPATH, "(//input[@name='email'])[2]")
+        self.click_sign_up_button = (By.XPATH, "(//button[@class='btn btn-default'])[2]")
+
+    def click_menu(self):
+        self.driver.find_element(*self.click_login_menu).click()
+
+    def set_name(self, name):
+        self.driver.find_element(*self.name).send_keys(name)
+
+    def set_mail(self, email):
+        self.driver.find_element(*self.email).send_keys(email)
+
+    def click_signup_btn(self):
+        self.driver.find_element(*self.click_sign_up_button).click()
+
+
+class ContactUs:
+    def __init__(self, driver):
+        self.driver = driver
+
+        self.contact_us_menu = (By.XPATH, "//a[@href='/contact_us']")
+        self.textbox_name = (By.NAME, "name")
+        self.textbox_email = (By.NAME, "email")
+        self.textbox_subject = (By.NAME, "subject")
+        self.textbox_message = (By.ID, "message")
+        self.photo_upload = (By.NAME, "upload_file")
+        self.submit_button = (By.NAME, "submit")
+
+    def click_contact_us_menu(self):
+        self.driver.find_element(*self.contact_us_menu).click()
+
+    def set_name(self, name):
+        self.driver.find_element(*self.textbox_name).send_keys(name)
+
+    def set_email(self, email):
+        self.driver.find_element(*self.textbox_email).send_keys(email)
+
+    def set_subject(self, subject):
+        self.driver.find_element(*self.textbox_subject).send_keys(subject)
+
+    def set_message(self, message):
+        self.driver.find_element(*self.textbox_message).send_keys(message)
+
+    def upload_photo(self, file_name):
+        self.driver.find_element(*self.photo_upload).send_keys(file_name)
+
+    def click_submit_button(self):
+        self.driver.find_element(*self.submit_button).click()
+
+
+class NavigateTestcasePage:
+
+    def __init__(self,driver):
+        self.driver = driver
+
+        self.test_case_menu = (By.XPATH, "//button[@class='btn btn-success']")
+
+    def click_test_case_menu(self):
+        self.driver.find_element(*self.test_case_menu).click()
