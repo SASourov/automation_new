@@ -210,3 +210,22 @@ class ProductButton:
 
     def click_view_product_button(self):
         self.driver.find_element(*self.view_product_button).click()
+
+
+class SearchProduct:
+    def __init__(self, driver):
+        self.driver = driver
+
+        self.product_button = (By.XPATH, "//a[@href='/products']")
+        self.textbox_search_product = (By.ID, "search_product")
+        self.search_button = (By.XPATH, "//i[@class='fa fa-search']")
+
+    def click_product_button(self):
+        self.driver.find_element(*self.product_button).click()
+
+    def set_search_box(self, search):
+        self.driver.find_element(*self.textbox_search_product).send_keys(search)
+
+    def click_search_button(self):
+        self.driver.find_element(*self.search_button).click()
+

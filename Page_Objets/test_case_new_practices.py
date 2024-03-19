@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 import random
 import string
+from Utilities.readPropeties import ReadConfig
 
 from Page_Objets.new_practices import (SignUpButton, InvalidLogin, Logout, ExistingMail, ContactUs,
                                        NavigateTestcasePage, ProductButton)
@@ -14,11 +15,16 @@ phn_num = random.randint(0000000000, 99999999999)
 
 
 class Test_001_LunchBrowser:
-    def test_homepage_visible(self):
-        self.driver = webdriver.Chrome()
+    url = ReadConfig.getURL()
+    userName = ReadConfig.userName()
+    email = ReadConfig.set_email()
+    password = ReadConfig.set_password()
+
+    def test_homepage_visible(self, setup):
+        self.driver = setup
         self.driver.implicitly_wait(20)
         self.driver.maximize_window()
-        self.driver.get('http://automationexercise.com')
+        self.driver.get(self.url)
         actual_title = self.driver.title
         if actual_title == "Automation Exercise":
             print("TC 001 is passed.\nHome page is visible successfully")
@@ -27,21 +33,26 @@ class Test_001_LunchBrowser:
         self.driver.close()
 
 
-class Test_002_ClickSignUpButton:
+class Test_002:
+    url = ReadConfig.getURL()
+    userName = ReadConfig.userName()
+    email = ReadConfig.set_email()
+    password = ReadConfig.set_password()
+
     def test_click_signup_button(self):
         self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(20)
         self.driver.maximize_window()
-        self.driver.get('http://automationexercise.com')
+        self.driver.get(self.url)
         self.sup = SignUpButton(self.driver)
         self.sup.click_menu()
-        self.sup.set_name("Abul Kashem")  # + str(random_num)
-        self.sup.set_mail("abul009@mail.com")  # + str(random_num) + "
+        self.sup.set_name(self.userName + str(random_num))  # + str(random_num)
+        self.sup.set_mail(self.email + str(random_num) + "@mail.com")  # + str(random_num) +"@mail.com "
         self.sup.click_signup_btn()
         time.sleep(3)
         self.sup.select_name_title()
         time.sleep(3)
-        self.sup.set_password("abc123@")
+        self.sup.set_password(self.password)
 
         set_b_date = Select(self.driver.find_element(By.ID, "days"))
         set_b_date.select_by_value("5")
@@ -109,12 +120,13 @@ class Test_002_ClickSignUpButton:
         self.driver.close()
 
 
-class Test_Case_003_Invalid_Login:
+class Test_Case_003:
+    url = ReadConfig.get_urL()
     def test_invalid_login(self):
         self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(20)
         self.driver.maximize_window()
-        self.driver.get('http://automationexercise.com')
+        self.driver.get(self.url)
         self.invalidlogin = InvalidLogin(self.driver)
         self.invalidlogin.click_menu()
         self.invalidlogin.set_email("akil12@mailinator.com")
